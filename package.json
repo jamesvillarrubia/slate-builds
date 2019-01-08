@@ -30,6 +30,7 @@
     "slate-hyperscript": "^0.11.24"
   },
   "scripts": {
+    "deploy": "git add . && yarn version --new-version `npm view . version`-slite-`git rev-parse --short HEAD`",
     "clean": "rm -rf ./dist ./lib ./node_modules"
   },
   "umdGlobals": {
