@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('immutable')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'immutable'], factory) :
-	(factory((global.SliteSlate = {}),global.Immutable));
+	(factory((global.Slate = {}),global.Immutable));
 }(this, (function (exports,immutable) { 'use strict';
 
 /*!
@@ -2923,9 +2923,17 @@ function transform(path, operation) {
     var npAbove = isAbove(np, path);
 
     if (pAbove) {
-      path = np.concat(path.slice(p.size));
+      if (isAfter(np, p)) {
+        path = decrement(np, 1, min(np, p) - 1).concat(path.slice(p.size));
+      } else {
+        path = np.concat(path.slice(p.size));
+      }
     } else if (pEqual) {
-      path = np;
+      if (isAfter(np, p)) {
+        path = decrement(np, 1, min(np, p) - 1);
+      } else {
+        path = np;
+      }
     } else {
       if (pYounger) {
         path = decrement(path, 1, pIndex);
